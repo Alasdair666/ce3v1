@@ -6,7 +6,6 @@
     int greenPin = 10;
     int bluePin = 9;
     int usbnumber = 0; //this variable holds what we are currently reading from serial
-    int debug = 1;
      
     void setup()
     {
@@ -18,24 +17,11 @@
      
     void loop()
     {
-     if (Serial.available() < 0) { //if there is anything on the serial port, read it
-     if (debug == 1){
-                setColor(80, 0, 80); //Purple - F
-                delay(30);
-             }
-        usbnumber = Serial.read(); //store it in the usbnumber variable
-    } else {
-      if (debug == 1){
-      setColor(0, 0, 255); // blue
-      delay(30);
-      }
+     if (Serial.available() > 0) { //if there is anything on the serial port, read it
+       usbnumber = Serial.read(); //store it in the usbnumber variable
     }
     
      if (usbnumber > 0) {
-       if (usbnumber == 49){
-         setColor(255, 0, 0);
-       }
-      //setColor(255, 140, 0);//Orange - A
          switch(usbnumber){
                  case 49:  setColor(255, 0, 0); //red - G
                    break;
@@ -47,15 +33,11 @@
                    break;
                  case 53:  setColor(250, 250, 250); // White - C
                    break;
-                 
+                 case 54:  setColor(0, 0, 0); // off
+                   break;
                }
-    } else {
-      if (debug == 1){
-      setColor(0, 255, 0); // green
-      delay(30);
-      }
     }
-   // usbnumber = 0; //reset 
+    
    }
      
     void setColor(int red, int green, int blue)
